@@ -1,11 +1,10 @@
 package com.example.questApp.controller;
 
+import com.example.questApp.dto.Post.PostCreateDto;
+import com.example.questApp.dto.Post.PostUpdateDto;
 import com.example.questApp.entities.Post;
 import com.example.questApp.services.PostService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,5 +24,26 @@ public class PostController {
     public List<Post> getPostList(@RequestParam Optional<Long> userId){
        return postService.getPosts(userId);
     }
+
+    @GetMapping("/{postId}")
+    public Post getPostById(@PathVariable Long postId){
+        return postService.getSelectedPost(postId);
+    }
+
+    @PostMapping
+    public List<Post> createPost(@RequestBody PostCreateDto post){
+        return (List<Post>) postService.createPost(post);
+    }
+
+    @PutMapping("/{postId}")
+    public Post updatePost(@PathVariable Long postId, @RequestBody PostUpdateDto newPost){
+        return postService.updatePost(postId, newPost);
+    }
+
+    @DeleteMapping("/{postId}")
+     public void deletePost(@PathVariable Long postId){
+        postService.deletePost(postId);
+    }
+
 
 }

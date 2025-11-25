@@ -25,7 +25,8 @@ public class Post {
     @OnDelete(action = OnDeleteAction.CASCADE)
     //JSON cevabında user bilgisi gizlenir (sonsuz döngüyü önler)
     @JsonIgnore
-    private User user;
+    //burada user objesini tanımladık
+     User user;
 
     String title;
 
