@@ -2,10 +2,12 @@ package com.example.questApp.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Data;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
+@Data
 @Table(name = "user_likes")
 public class Like {
     @Id

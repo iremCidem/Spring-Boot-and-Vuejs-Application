@@ -1,6 +1,7 @@
 package com.example.questApp.services;
 
 import com.example.questApp.dto.Comment.CommentCreateDto;
+import com.example.questApp.dto.Comment.CommentUpdateDto;
 import com.example.questApp.entities.Comment;
 import com.example.questApp.entities.Post;
 import com.example.questApp.entities.User;
@@ -23,14 +24,15 @@ public class CommentService {
     }
 
     public List<Comment> getComments(Optional<Long> userId, Optional<Long> postId) {
-        if (userId.isPresent()) {
-            return commentRepository.findByUserId(userId);
+        if (userId.isPresent() && postId.isPresent()) {
+            return commentRepository.findByUserIdAndPostId(userId.get(), postId.get());
+        } else if (userId.isPresent()) {
+            return commentRepository.findByUserId(userId.get());
         } else if (postId.isPresent()) {
-            return commentRepository.findByPostId(postId);
+            return commentRepository.findByPostId(postId.get());
         } else {
             return commentRepository.findAll();
         }
-
     }
 
     public Comment getCommentById(Long id) {
@@ -46,9 +48,27 @@ public class CommentService {
             comment.setPost(selectedPost);
             comment.setText(commentCreateDto.getText());
             comment.setId(commentCreateDto.getId());
+            // burada zaten save kayıt ettiği objeyi dönüyor.
             return commentRepository.save(comment);
+        } else
+            return null;
+
+    }
+
+    public Comment updateComment(Long commentId, CommentUpdateDto comment) {
+        Optional<Comment> oldComment = commentRepository.findById(commentId);
+        if (oldComment.isPresent()) {
+            Comment existingComment = oldComment.get();
+            // setText void döner.
+            existingComment.setText(comment.getText());
+            return commentRepository.save(existingComment);
         } else {
             return null;
         }
+    }
+
+    public void deleteComment(Long commentId) {
+        Optional<Comment> oldComment = commentRepository.findById(commentId);
+        oldComment.ifPresent(comment -> commentRepository.delete(comment));
     }
 }
