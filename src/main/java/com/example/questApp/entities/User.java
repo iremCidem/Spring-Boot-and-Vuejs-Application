@@ -11,5 +11,4 @@ public class User {
     Long id;
     String user_name;
     String pass_word;
-
 }

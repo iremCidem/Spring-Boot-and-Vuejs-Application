@@ -39,13 +39,13 @@ public class PostService {
        newPost.setTitle(postDto.getTitle());
        newPost.setText(postDto.getText());
        newPost.setUser(user);
-       newPost.setId(postDto.getId());
        postRepository.save(newPost);
        return postRepository.findAll();
     }
 
     public Post updatePost(Long postId, PostUpdateDto newPost){
         Post post = postRepository.findById(postId).orElse(null);
+        System.out.println("Post: " + post + " | NewPost: " + newPost);
         if(post!=null){
             post.setTitle(newPost.getTitle());
             post.setText(newPost.getText());

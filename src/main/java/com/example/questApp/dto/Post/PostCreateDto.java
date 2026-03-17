@@ -6,7 +6,6 @@ import lombok.Data;
 
 //bir post create etme objesi yaratıyoruz.
 public class PostCreateDto {
-Long id;
 String title;
 String text;
 Long userId;

@@ -14,7 +14,8 @@ public class Post {
 
     //primary key
     @Id
-    Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id; //otomatik artan ID
 
     //bu alan post user ilişkisini temsil eder.
     //birden fazla post tek bir usera bağlı olduğu için many to one.
