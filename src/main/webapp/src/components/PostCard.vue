@@ -3,7 +3,10 @@
     <template #header>
       <div class="card-header">
         <span>By:{{ userId }}</span>
+        <Star  class="like-btn" @click="likePost"/>
+        <StarFilled class="like-btn" color="yellow" @click="removeLike"/>
       </div>
+
     </template>
     <div>
       <h2>{{ post.title }}</h2>
@@ -51,10 +54,11 @@
 <script setup lang="ts">
 import {useRoute} from "vue-router";
 import {ref} from "vue";
+import {Star, StarFilled} from '@element-plus/icons-vue'
 
 const route = useRoute()
 const userId = route.params.id
-const emit = defineEmits(["delete", "update"])
+const emit = defineEmits(["delete", "update", "like"])
 const props = defineProps({
   post: {
     type: Object,
@@ -66,6 +70,7 @@ const updatePostForm = ref({
   postTitle: props.post.title,
   postText: props.post.text
 })
+const isStarred = false
 
 function handleDelete(postId: Number) {
   emit("delete", postId)
@@ -82,9 +87,25 @@ function updatePost(postId: Number) {
   })
 }
 
+function likePost(postId: Number){
+  emit("like", postId)
+}
+
+function removeLike(postId: Number){
+
+}
 
 </script>
 
 <style scoped>
-
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center
+}
+.like-btn{
+  width: 2em;
+  height: 2em;
+  cursor: pointer;
+}
 </style>
